@@ -1,0 +1,78 @@
+---
+title: "From PLINK BED to HIrisPlex(-S) CSV with `hirisplexr`"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{From PLINK BED to HIrisPlex(-S) CSV with hirisplexr}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(collapse = TRUE, comment = "#>")
+```
+
+## Overview
+
+`hirisplexr` converts a PLINK 1.9 binary dataset (`.bed/.bim/.fam`) into the
+CSV format required by the HIrisPlex / HIrisPlex-S web application.
+
+- Output columns: `SampleID` + one `rsID_Allele` per SNP in the chosen panel.
+- Cell values: allele counts `0 / 1 / 2`, or `NA` if missing.
+- Panels: IrisPlex (6 SNP), HIrisPlex (24 SNP), HIrisPlex-S (41 SNP).
+
+## Installation
+
+```r
+# Install runtime deps
+install.packages(c("BEDMatrix", "data.table"))
+# Install this package from source tarball or local folder
+```
+
+## Quick start
+
+```{r, eval=FALSE}
+library(hirisplexr)
+prefix <- "/path/to/your/prefix"  # without extension
+write_hirisplex_csv(prefix, panel = "hirisplexs", out = "hirisplexs.csv")
+```
+
+## How allele mapping works
+
+- `BEDMatrix::BEDMatrix()` yields the genotype dosage of **A1** from the `.bim`
+  file (values: 0/1/2).
+- For each required `rsID_Allele`:
+  - If the requested allele equals `A1`, we use the dosage directly.
+  - If it equals `A2`, we take `2 - dosage`.
+  - If `allow_strand_flip = TRUE`, we also try the **complement** (A↔T, C↔G)
+    to account for strand orientation; if no match is possible we write `NA`
+    and emit a warning.
+
+### Palindromic SNPs
+
+For A/T or C/G SNPs, complements equal the original bases. The function still
+uses the `.bim` allele pair (A1/A2) to determine the mapping. You should ensure
+that your BIM file uses a consistent reference across datasets.
+
+## Panels and order
+
+The complete list of SNPs and their required input alleles is packaged in
+`inst/extdata/hirisplex_panels.csv`. The order of columns in the output CSV
+matches exactly the order used by the web application.
+
+```{r}
+# Inspect packaged panel metadata
+loader <- getFromNamespace(".load_hirisplex_panels", "hirisplexr")
+head(loader())
+```
+
+## Reproducibility tips
+
+- Keep `.bed/.bim/.fam` together under the same prefix.
+- If you update your PLINK files, regenerate the CSV to keep alleles consistent.
+- Track the package version used to produce the CSV in your analysis records.
+
+## Session info
+
+```{r}
+sessionInfo()
+```

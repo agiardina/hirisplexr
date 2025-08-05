@@ -1,0 +1,76 @@
+# ---- R session & history ----
+.Rhistory
+.Rapp.history
+.RData
+.Ruserdata
+
+# ---- IDE / editor ----
+.Rproj.user/
+*.Rproj
+.vscode/
+.idea/
+
+# ---- OS cruft ----
+.DS_Store
+Thumbs.db
+*~
+
+# ---- Build artifacts (package) ----
+*.tar.gz
+*.tgz
+*.zip
+*.Rcheck/
+.Rcheck/
+.Rout
+.Rout.*
+.Rprof*
+*.cov
+*.lcov
+
+# ---- Vignettes & knitted outputs (CRAN le rigenera) ----
+inst/doc/
+vignettes/*_cache/
+vignettes/*_files/
+vignettes/*-figure/
+vignettes/*.html
+vignettes/*.pdf
+*.utf8.md
+*.knit.md
+
+# ---- Tests (artefatti di esecuzione) ----
+tests/*.Rout*
+tests/testthat/*.Rout*
+tests/testthat/*.Rout.fail
+tests/testthat/*.Rout.save
+
+# ---- Compiled code ----
+src/*.o
+src/*.so
+src/*.dll
+src/*.dylib
+src/*.a
+src/*/*.o
+src/*/*.so
+src/*/*.dll
+src/*/*.dylib
+src/*/*.a
+src-i386/
+src-x64/
+
+# ---- Dependency managers ----
+packrat/
+renv/library/
+renv/staging/
+
+# ---- Revdep checks ----
+revdep/
+revdepcheck/
+
+# ---- Auth tokens / misc ----
+.httr-oauth
+
+# ---- pkgdown site (se NON vuoi versionarlo, lascia attivo) ----
+# docs/
+
+# ---- File di rilascio CRAN (spesso inutili in repo) ----
+CRAN-SUBMISSION

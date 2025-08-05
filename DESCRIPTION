@@ -1,6 +1,6 @@
 Package: hirisplexr
 Type: Package
-Title: Build HIrisPlex / HIrisPlex-S CSV from PLINK BED/BIM/FAM
+Title: From PLINK to HIrisPlex
 Version: 0.1.0
 Author: Andrea Giardina [aut, cre]
 Maintainer: Andrea Giardina <r@andreagiardina.com>

@@ -74,3 +74,5 @@ revdepcheck/
 
 # ---- File di rilascio CRAN (spesso inutili in repo) ----
 CRAN-SUBMISSION
+/doc/
+/Meta/
